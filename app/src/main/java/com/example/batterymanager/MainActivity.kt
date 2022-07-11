@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
                 (intent.getIntExtra(BatteryManager.EXTRA_TEMPERATURE, 0) / 10).toString() + " °C"
             mainBinding.txtVoltage.text =
                 (intent.getIntExtra(BatteryManager.EXTRA_VOLTAGE, 0) / 1000).toString() + " volt"
-            mainBinding.txtTemperature.text = intent.getStringExtra(BatteryManager.EXTRA_TECHNOLOGY)
+            mainBinding.txtTechnology.text = intent.getStringExtra(BatteryManager.EXTRA_TECHNOLOGY)
 
         }
 
