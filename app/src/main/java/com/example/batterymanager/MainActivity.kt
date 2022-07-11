@@ -6,13 +6,19 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.os.BatteryManager
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import com.example.batterymanager.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var mainBinding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+
+        mainBinding = ActivityMainBinding.inflate(layoutInflater)
+        val view = mainBinding.root
+        setContentView(view)
 
         registerReceiver(batteryInfoBroadcastReceiver, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
 
@@ -22,13 +28,21 @@ class MainActivity : AppCompatActivity() {
         override fun onReceive(context: Context, intent: Intent) {
 
             var batteryLevel = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, 0)
-            var batteryPlugged = intent.getIntExtra(BatteryManager.EXTRA_PLUGGED, 0)
-            var batteryTemp = intent.getIntExtra(BatteryManager.EXTRA_TEMPERATURE, 0) / 10
-            var batteryVol = intent.getIntExtra(BatteryManager.EXTRA_VOLTAGE, 0) / 1000
-            Log.e("1010", batteryLevel.toString())
-            Log.e("1010", batteryPlugged.toString())
-            Log.e("1010", batteryTemp.toString())
-            Log.e("1010", batteryVol.toString())
+
+            if (intent.getIntExtra(BatteryManager.EXTRA_PLUGGED, 0) == 0) {
+                mainBinding.txtPlug.text = "plug out"
+
+            } else {
+
+                mainBinding.txtPlug.text = "plug in"
+            }
+
+            mainBinding.txtTemperature.text =
+                (intent.getIntExtra(BatteryManager.EXTRA_TEMPERATURE, 0) / 10).toString() + " °C"
+            mainBinding.txtVoltage.text =
+                (intent.getIntExtra(BatteryManager.EXTRA_VOLTAGE, 0) / 1000).toString() + " volt"
+            mainBinding.txtTemperature.text = intent.getStringExtra(BatteryManager.EXTRA_TECHNOLOGY)
+
         }
 
     }

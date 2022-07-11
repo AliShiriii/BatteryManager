@@ -48,4 +48,6 @@ dependencies {
     def lottieVersion = '5.2.0'
     implementation "com.airbnb.android:lottie:$lottieVersion"
 
+    def circularProgressbarVersion = '3.1.0'
+    implementation "com.mikhaellopez:circularprogressbar:$circularProgressbarVersion"
 }
