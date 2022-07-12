@@ -20,8 +20,8 @@
         android:id="@+id/chart_g2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.45" />
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.9" />
 
 
     <androidx.constraintlayout.widget.Guideline
@@ -29,27 +29,63 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.45" />
+        app:layout_constraintGuide_percent="0.05" />
 
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/chart_g5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.23" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/chart_g4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.45" />
+        app:layout_constraintGuide_percent="0.4" />
 
 
     <com.mikhaellopez.circularprogressbar.CircularProgressBar
         android:id="@+id/circularProgressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="240dp"
+        android:layout_height="240dp"
         app:cpb_background_progressbar_color="#b6bbd8"
         app:cpb_background_progressbar_width="5dp"
         app:cpb_progress_direction="to_right"
-        app:cpb_progressbar_color="#3f51b5"
+        app:cpb_progressbar_color="@color/green"
         app:cpb_progressbar_width="10dp"
-        app:cpb_round_border="false" />
+        app:cpb_round_border="false"
+        app:layout_constraintBottom_toTopOf="@+id/chart_g4"
+        app:layout_constraintEnd_toEndOf="@id/chart_g2"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="@+id/chart_g1"
+        app:layout_constraintTop_toTopOf="@+id/chart_g3"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/txtCharge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="30 %"
+        android:textColor="@color/white"
+        android:textSize="@dimen/large_tex"
+        android:layout_marginTop="@dimen/margin_large"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/chart_g2"
+        app:layout_constraintStart_toStartOf="@+id/chart_g1"
+        app:layout_constraintTop_toTopOf="@+id/chart_g5" />
+
+    <ImageView
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@drawable/energy"
+        app:layout_constraintBottom_toTopOf="@+id/chart_g5"
+        app:layout_constraintEnd_toEndOf="@+id/circularProgressBar"
+        app:layout_constraintStart_toStartOf="@+id/circularProgressBar"
+
+        />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/bseGuideline"

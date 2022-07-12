@@ -43,7 +43,10 @@ class MainActivity : AppCompatActivity() {
                 (intent.getIntExtra(BatteryManager.EXTRA_VOLTAGE, 0) / 1000).toString() + " volt"
             mainBinding.txtTechnology.text = intent.getStringExtra(BatteryManager.EXTRA_TECHNOLOGY)
 
+            mainBinding.circularProgressBar.progressMax = 100f
+            mainBinding.circularProgressBar.setProgressWithAnimation(batteryLevel.toFloat())
         }
+
 
     }
 
