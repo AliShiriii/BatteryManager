@@ -30,11 +30,11 @@ class MainActivity : AppCompatActivity() {
             var batteryLevel = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, 0)
 
             if (intent.getIntExtra(BatteryManager.EXTRA_PLUGGED, 0) == 0) {
-                mainBinding.txtPlug.text = "plug out"
+                mainBinding.txtPlug.text = "plug-out"
 
             } else {
 
-                mainBinding.txtPlug.text = "plug in"
+                mainBinding.txtPlug.text = "plug-in"
             }
 
             mainBinding.txtTemperature.text =
@@ -45,6 +45,8 @@ class MainActivity : AppCompatActivity() {
 
             mainBinding.circularProgressBar.progressMax = 100f
             mainBinding.circularProgressBar.setProgressWithAnimation(batteryLevel.toFloat())
+
+            mainBinding.txtCharge.text = batteryLevel.toString()
         }
 
 
