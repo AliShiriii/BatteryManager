@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.os.BatteryManager
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.example.batterymanager.databinding.ActivityMainBinding
 
@@ -20,6 +21,16 @@ class MainActivity : AppCompatActivity() {
         val view = mainBinding.root
         setContentView(view)
 
+
+        val batteryArrayPercent: MutableList<BatteryModel> = ArrayList()
+
+
+        val batteryUsage = BatteryUsage(this).getUsageStateList()
+
+        for (item in batteryUsage){
+
+            Log.e("BatteryManager:", item.packageName + " : " + item.totalTimeInForeground)
+        }
         registerReceiver(batteryInfoBroadcastReceiver, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
 
     }

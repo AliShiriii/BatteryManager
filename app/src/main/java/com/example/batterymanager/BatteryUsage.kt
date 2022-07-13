@@ -9,10 +9,12 @@ import java.util.*
 
 class BatteryUsage(context: Context) {
 
+    private var myContext = context
+
     init {
 
         //Check if permission enable
-        if (getUsageStateList(context).isEmpty()) {
+        if (getUsageStateList().isEmpty()) {
 
             val intent = Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS)
             context.startActivity(intent)
@@ -20,8 +22,8 @@ class BatteryUsage(context: Context) {
         }
     }
 
-    private fun getUsageStateList(context: Context): List<UsageStats> {
-        val usageStateManagement = getUsageStateManager(context)
+    fun getUsageStateList(): List<UsageStats> {
+        val usageStateManagement = getUsageStateManager(myContext)
         val calendar = Calendar.getInstance()
         val endTime = calendar.timeInMillis
         calendar.add(Calendar.YEAR, -1)
@@ -34,9 +36,20 @@ class BatteryUsage(context: Context) {
 
     }
 
+    private fun getTotalTime(): Long {
+
+        var totalTime: Long = 0
+        for (item in getUsageStateList()) {
+
+            totalTime += item.totalTimeInForeground
+        }
+        return totalTime
+
+    }
+
     private fun getUsageStateManager(context: Context): UsageStatsManager {
 
-        return context.getSystemService("usageState") as UsageStatsManager
+        return context.getSystemService("usagestats") as UsageStatsManager
 
     }
 }
