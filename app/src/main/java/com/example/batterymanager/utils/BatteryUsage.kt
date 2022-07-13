@@ -1,4 +1,4 @@
-package com.example.batterymanager
+package com.example.batterymanager.utils
 
 import android.app.usage.UsageStats
 import android.app.usage.UsageStatsManager
@@ -24,10 +24,9 @@ class BatteryUsage(context: Context) {
 
     fun getUsageStateList(): List<UsageStats> {
         val usageStateManagement = getUsageStateManager(myContext)
-        val calendar = Calendar.getInstance()
-        val endTime = calendar.timeInMillis
-        calendar.add(Calendar.YEAR, -1)
-        val startTime = calendar.timeInMillis
+        val endTime = System.currentTimeMillis()
+
+        val startTime = System.currentTimeMillis() - 24 * 3600 * 1000
         return usageStateManagement.queryUsageStats(
             UsageStatsManager.INTERVAL_DAILY,
             startTime,
@@ -36,7 +35,7 @@ class BatteryUsage(context: Context) {
 
     }
 
-    private fun getTotalTime(): Long {
+    fun getTotalTime(): Long {
 
         var totalTime: Long = 0
         for (item in getUsageStateList()) {

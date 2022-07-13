@@ -1,7 +1,8 @@
-package com.example.batterymanager
+package com.example.batterymanager.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.batterymanager.R
 
 class UsageBatteryActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
