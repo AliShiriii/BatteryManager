@@ -39,25 +39,7 @@ class UsageBatteryActivity : AppCompatActivity() {
             }
         }
 
-        var sortedList = batteryPercentArray.groupBy { it.packageName }
-            .mapValues { entry -> entry.value.sumBy { it.percentUsage } }.toList()
-            .sortedWith(compareBy { it.second }).reversed()
-
-        for (item in sortedList) {
-
-            val timePerApp =
-                item.second.toFloat() / 100 * batteryUsage.getTotalTime().toFloat() / 1000 / 60
-            val hour = timePerApp / 60
-            val min = timePerApp % 60
-
-            Log.e(
-                "BatteryManager: ",
-                "${item.first} : ${item.second} time usage is : ${hour.roundToInt()} : ${min.roundToInt()}"
-            )
-
-        }
-
-        val adapter = BatteryUsageAdapter(batteryPercentArray)
+        val adapter = BatteryUsageAdapter(batteryPercentArray, batteryUsage.getTotalTime())
         usageBattery.batteryRecyclerView.setHasFixedSize(true)
         usageBattery.batteryRecyclerView.layoutManager = LinearLayoutManager(this)
 
