@@ -3,9 +3,11 @@ package com.example.batterymanager.adapter
 import android.content.Context
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
+import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -33,6 +35,7 @@ class BatteryUsageAdapter(
         var txtAppName: TextView = view.findViewById(R.id.txtAppName)
         var txtTime: TextView = view.findViewById(R.id.txtTime)
         var progressBar: ProgressBar = view.findViewById(R.id.progressBar)
+        var imageIcon: ImageView = view.findViewById(R.id.imageIcon)
 
     }
 
@@ -51,6 +54,7 @@ class BatteryUsageAdapter(
         holder.txtTime.text = batteryFinalList[position].timeUsage
         holder.txtAppName.text = getAppName(batteryFinalList[position].packageName.toString())
         holder.progressBar.progress = batteryFinalList[position].percentUsage
+        holder.imageIcon.setImageDrawable(getAppIcon(batteryFinalList[position].packageName.toString()))
     }
 
     override fun getItemCount(): Int {
@@ -82,6 +86,7 @@ class BatteryUsageAdapter(
 
         }
         return finalList
+
     }
 
     fun getAppName(packageName: String): String {
@@ -98,5 +103,18 @@ class BatteryUsageAdapter(
 
         return (if (appInfo != null) packageManager.getApplicationLabel(appInfo) else "unknown") as String
 
+    }
+
+    fun getAppIcon(packageName: String): Drawable? {
+
+        var icon : Drawable? = null
+        try {
+
+            icon = context.packageManager.getApplicationIcon(packageName)
+
+        }catch (e: PackageManager.NameNotFoundException){
+            e.printStackTrace()
+        }
+        return icon
     }
 }

@@ -6,7 +6,7 @@
     android:background="@color/purple_700">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/imageIcon"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginStart="@dimen/margin_very_large"
@@ -28,7 +28,7 @@
         android:textStyle="bold"
         android:textSize="@dimen/normal_tex"
         app:layout_constraintBottom_toTopOf="@+id/guidelineItem"
-        app:layout_constraintStart_toEndOf="@id/imageView" />
+        app:layout_constraintStart_toEndOf="@id/imageIcon" />
 
     <TextView
         android:id="@+id/txtPercent"
@@ -53,6 +53,15 @@
         app:layout_constraintBottom_toTopOf="@+id/guidelineItem"
         app:layout_constraintEnd_toEndOf="parent" />
 
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/line"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+
+        />
     <ProgressBar
         android:id="@+id/progressBar"
         style="?android:attr/progressBarStyleHorizontal"
@@ -64,7 +73,7 @@
         android:max="100"
         android:progress="45"
         app:layout_constraintEnd_toStartOf="@+id/txtPercent"
-        app:layout_constraintStart_toEndOf="@id/imageView"
+        app:layout_constraintStart_toEndOf="@id/imageIcon"
         app:layout_constraintTop_toTopOf="@id/guidelineItem" />
 
     <androidx.constraintlayout.widget.Guideline
