@@ -1,8 +1,12 @@
 package com.example.batterymanager.adapter
 
+import android.content.Context
+import android.content.pm.ApplicationInfo
+import android.content.pm.PackageManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.batterymanager.R
@@ -10,6 +14,7 @@ import com.example.batterymanager.model.BatteryModel
 import kotlin.math.roundToInt
 
 class BatteryUsageAdapter(
+    private val context: Context,
     private val battery: MutableList<BatteryModel>,
     private val totalTime: Long
 ) : RecyclerView.Adapter<BatteryUsageAdapter.BatteryViewHolder>() {
@@ -24,7 +29,10 @@ class BatteryUsageAdapter(
 
     class BatteryViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-        var test: TextView = view.findViewById(R.id.test)
+        var txtPercent: TextView = view.findViewById(R.id.txtPercent)
+        var txtAppName: TextView = view.findViewById(R.id.txtAppName)
+        var txtTime: TextView = view.findViewById(R.id.txtTime)
+        var progressBar: ProgressBar = view.findViewById(R.id.progressBar)
 
     }
 
@@ -39,8 +47,10 @@ class BatteryUsageAdapter(
 
     override fun onBindViewHolder(holder: BatteryViewHolder, position: Int) {
 
-        holder.test.text = "${batteryFinalList[position].packageName} : ${batteryFinalList[position].percentUsage} : ${batteryFinalList[position].timeUsage}"
-
+        holder.txtPercent.text = batteryFinalList[position].percentUsage.toString() + "%"
+        holder.txtTime.text = batteryFinalList[position].timeUsage
+        holder.txtAppName.text = getAppName(batteryFinalList[position].packageName.toString())
+        holder.progressBar.progress = batteryFinalList[position].percentUsage
     }
 
     override fun getItemCount(): Int {
@@ -66,7 +76,7 @@ class BatteryUsageAdapter(
 
             batteryModel.packageName = item.first
             batteryModel.percentUsage = item.second
-            batteryModel.timeUsage = "${hour.roundToInt()} : ${min.roundToInt()}"
+            batteryModel.timeUsage = "${hour.roundToInt()} hour ${min.roundToInt()} minutes"
 
             finalList += batteryModel
 
@@ -74,4 +84,19 @@ class BatteryUsageAdapter(
         return finalList
     }
 
+    fun getAppName(packageName: String): String {
+
+        val packageManager = context.applicationContext.packageManager
+
+        val appInfo: ApplicationInfo? = try {
+
+            packageManager.getApplicationInfo(packageName, 0)
+
+        } catch (e: PackageManager.NameNotFoundException) {
+            null
+        }
+
+        return (if (appInfo != null) packageManager.getApplicationLabel(appInfo) else "unknown") as String
+
+    }
 }

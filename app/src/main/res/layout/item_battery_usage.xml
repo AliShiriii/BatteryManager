@@ -48,11 +48,13 @@
         android:layout_marginEnd="@dimen/margin_very_large"
         android:layout_marginBottom="@dimen/margin_small"
         android:text="Shiri Shiri"
+        android:textSize="12sp"
         android:textColor="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/guidelineItem"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <ProgressBar
+        android:id="@+id/progressBar"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
