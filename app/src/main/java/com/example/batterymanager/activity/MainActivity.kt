@@ -7,6 +7,7 @@ import android.content.IntentFilter
 import android.os.BatteryManager
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import androidx.appcompat.app.AppCompatActivity
 import com.example.batterymanager.databinding.ActivityMainBinding
 import com.example.batterymanager.model.BatteryModel
@@ -23,6 +24,19 @@ class MainActivity : AppCompatActivity() {
         mainBinding = ActivityMainBinding.inflate(layoutInflater)
         val view = mainBinding.root
         setContentView(view)
+
+        mainBinding.imageMenu.setOnClickListener {
+
+            mainBinding.drawer.openDrawer(Gravity.RIGHT)
+
+        }
+
+        mainBinding.includeDrawer.txtAppUsage.setOnClickListener {
+
+            startActivity(Intent(this@MainActivity, UsageBatteryActivity::class.java))
+            mainBinding.drawer.closeDrawer(Gravity.RIGHT)
+
+        }
 
         registerReceiver(batteryInfoBroadcastReceiver, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
 

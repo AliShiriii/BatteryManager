@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/drawer"
     android:orientation="vertical">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -53,6 +54,7 @@
             app:layout_constraintGuide_percent="0.4" />
 
         <ImageView
+            android:id="@+id/imageMenu"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_margin="@dimen/margin_large"
@@ -348,7 +350,7 @@
         >
 
         <include android:id="@+id/includeDrawer"
-            layout="@layout/activity_main"
+            layout="@layout/drawer_layout"
 
             />
 
