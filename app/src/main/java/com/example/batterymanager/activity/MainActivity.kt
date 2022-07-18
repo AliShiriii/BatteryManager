@@ -10,8 +10,10 @@ import android.os.BatteryManager
 import android.os.Bundle
 import android.view.Gravity
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.example.batterymanager.R
 import com.example.batterymanager.databinding.ActivityMainBinding
+import com.example.batterymanager.service.BatteryAlarmService
 
 class MainActivity : AppCompatActivity() {
 
@@ -24,21 +26,25 @@ class MainActivity : AppCompatActivity() {
         val view = mainBinding.root
         setContentView(view)
 
+        startService()
+
         mainBinding.imageMenu.setOnClickListener {
-
             mainBinding.drawer.openDrawer(Gravity.RIGHT)
-
         }
 
         mainBinding.includeDrawer.txtAppUsage.setOnClickListener {
-
             startActivity(Intent(this@MainActivity, UsageBatteryActivity::class.java))
             mainBinding.drawer.closeDrawer(Gravity.RIGHT)
-
         }
 
         registerReceiver(batteryInfoBroadcastReceiver, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
 
+    }
+
+    private fun startService() {
+
+        val serviceIntent = Intent(this, BatteryAlarmService::class.java)
+        ContextCompat.startForegroundService(this, serviceIntent)
     }
 
     private var batteryInfoBroadcastReceiver: BroadcastReceiver = object : BroadcastReceiver() {
