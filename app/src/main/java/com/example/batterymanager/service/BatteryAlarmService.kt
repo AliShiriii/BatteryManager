@@ -1,9 +1,14 @@
 package com.example.batterymanager.service
 
+import android.annotation.SuppressLint
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.Service
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
+import android.os.BatteryManager
 import android.os.Build
 import android.os.IBinder
 import androidx.core.app.NotificationCompat
@@ -11,8 +16,14 @@ import com.example.batterymanager.R
 
 class BatteryAlarmService : Service() {
 
+    var manager : NotificationManager? = null
+
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         createNotificationChannel()
+        startNotification()
+
+        registerReceiver(batteryInfoBroadcastReceiver, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
+
         return START_STICKY
     }
 
@@ -25,9 +36,8 @@ class BatteryAlarmService : Service() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val serviceChannel =
                 NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_MIN)
-            val manager = getSystemService(NotificationManager::class.java)
-            manager.createNotificationChannel(serviceChannel)
-
+            manager = getSystemService(NotificationManager::class.java)
+            manager?.createNotificationChannel(serviceChannel)
         }
 
     }
@@ -35,18 +45,51 @@ class BatteryAlarmService : Service() {
     private fun startNotification() {
 
         val notification = NotificationCompat.Builder(this, CHANNEL_ID)
-            .setContentTitle("My TiTle")
+            .setContentTitle("Loading...")
             .setContentText("this is my content")
             .setSmallIcon(R.drawable.health_good)
             .build()
 
-        startForeground(1, notification)
+        startForeground(NOTIFICATION_ID, notification)
+    }
+
+    private var batteryInfoBroadcastReceiver: BroadcastReceiver = object : BroadcastReceiver() {
+        @SuppressLint("SetTextI18n")
+        override fun onReceive(context: Context, intent: Intent) {
+
+            var batteryLevel = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, 0)
+
+            var plugState = ""
+
+            plugState = if (intent.getIntExtra(BatteryManager.EXTRA_PLUGGED, 0) == 0) {
+                "your phone using battery"
+            } else {
+                "your phone is using charging"
+            }
+
+            updateNotification(batteryLevel, plugState)
+
+        }
+    }
+    private fun updateNotification(batteryLevel: Int, plugState: String) {
+
+        val notification  = NotificationCompat.Builder(this, CHANNEL_ID)
+            .setContentTitle(plugState)
+            .setContentText("battery charge : $batteryLevel")
+            .setSmallIcon(R.drawable.health_good)
+            .build()
+
+        manager?.notify(NOTIFICATION_ID, notification)
+
+        startForeground(NOTIFICATION_ID, notification)
+
     }
 
     companion object {
 
         const val CHANNEL_ID = "BatteryManagerChannel"
         const val CHANNEL_NAME = "BatteryManagerService"
+        const val NOTIFICATION_ID = 1
 
     }
 }

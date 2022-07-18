@@ -98,19 +98,14 @@ class MainActivity : AppCompatActivity() {
                         "your battery is overHeat, please don't work with your phone "
                     mainBinding.txtHealth.setTextColor(Color.RED)
                     mainBinding.imageHealth.setImageResource(R.drawable.health_overheat)
-
                 }
                 BatteryManager.BATTERY_HEALTH_OVER_VOLTAGE -> {
                     mainBinding.txtHealth.text =
                         "your battery is fully dead, please change your battery"
                     mainBinding.txtHealth.setTextColor(Color.YELLOW)
                     mainBinding.imageHealth.setImageResource(R.drawable.health_volt)
-
-
                 }
-
                 else -> {
-
                     mainBinding.txtHealth.text =
                         "your battery is fully dead, please change your battery"
                     mainBinding.txtHealth.setTextColor(Color.parseColor("#000000"))
@@ -120,8 +115,6 @@ class MainActivity : AppCompatActivity() {
             }
 
         }
-
-
     }
 
 }
