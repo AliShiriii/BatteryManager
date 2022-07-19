@@ -2,8 +2,10 @@ package com.example.batterymanager.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.example.batterymanager.databinding.ActivitySplashBinding
+import com.example.batterymanager.helper.SharedPreferenceManager
 import java.util.*
 import kotlin.concurrent.timerTask
 
@@ -16,6 +18,10 @@ class SplashActivity : AppCompatActivity() {
         binding = ActivitySplashBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+
+        SharedPreferenceManager.setServiceState(this@SplashActivity, true)
+
+        Log.e("2424", "isServiceOn : ${SharedPreferenceManager.isServiceOn(this@SplashActivity)}")
 
         val textArray = arrayOf(
             "Make Your Battery Powerful",
