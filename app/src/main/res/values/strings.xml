@@ -6,4 +6,5 @@
     <string name="technology">Technology</string>
     <string name="plug_state">Plug State</string>
     <string name="temperature">temperature</string>
+    <string name="service_is_off">service is off</string>
 </resources>

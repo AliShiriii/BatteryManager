@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/purple_700"
 
     >
@@ -62,6 +63,29 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent=".95"
 
+        />
+
+    <Switch
+        android:id="@+id/serviceSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_large"
+        app:layout_constraintEnd_toStartOf="@id/drawerGuideLine2"
+        app:layout_constraintTop_toBottomOf="@id/imagePlug"
+        tools:ignore="UseSwitchCompatOrMaterialXml"
+        />
+
+    <TextView
+        android:id="@+id/serviceSwitchText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/service_is_off"
+        android:textColor="@color/white"
+        android:layout_marginEnd="@dimen/margin_large"
+        android:textSize="@dimen/normal_tex"
+        app:layout_constraintBottom_toBottomOf="@id/serviceSwitch"
+        app:layout_constraintEnd_toStartOf="@id/serviceSwitch"
+        app:layout_constraintTop_toTopOf="@id/serviceSwitch"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

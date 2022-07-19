@@ -9,10 +9,12 @@ import android.graphics.Color
 import android.os.BatteryManager
 import android.os.Bundle
 import android.view.Gravity
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.example.batterymanager.R
 import com.example.batterymanager.databinding.ActivityMainBinding
+import com.example.batterymanager.helper.SharedPreferenceManager
 import com.example.batterymanager.service.BatteryAlarmService
 
 class MainActivity : AppCompatActivity() {
@@ -26,8 +28,6 @@ class MainActivity : AppCompatActivity() {
         val view = mainBinding.root
         setContentView(view)
 
-        startService()
-
         mainBinding.imageMenu.setOnClickListener {
             mainBinding.drawer.openDrawer(Gravity.RIGHT)
         }
@@ -39,19 +39,50 @@ class MainActivity : AppCompatActivity() {
 
         registerReceiver(batteryInfoBroadcastReceiver, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
 
+        if (SharedPreferenceManager.isServiceOn(this@MainActivity) == true) {
+
+            mainBinding.includeDrawer.serviceSwitchText.text = "Service is on"
+            mainBinding.includeDrawer.serviceSwitch.isChecked = true
+            startServices()
+
+        } else {
+            mainBinding.includeDrawer.serviceSwitchText.text = "Service is off"
+            mainBinding.includeDrawer.serviceSwitch.isChecked = true
+            stopServices()
+        }
+        mainBinding.includeDrawer.serviceSwitch.setOnCheckedChangeListener { switch, isCheck ->
+            SharedPreferenceManager.setServiceState(this@MainActivity, isCheck)
+            if (isCheck) {
+                startServices()
+                mainBinding.includeDrawer.serviceSwitchText.text = "Service is on"
+                Toast.makeText(applicationContext, "service is turn on", Toast.LENGTH_LONG).show()
+            } else {
+                stopServices()
+                mainBinding.includeDrawer.serviceSwitchText.text = "Service is off"
+                Toast.makeText(applicationContext, "service is turn off", Toast.LENGTH_LONG).show()
+            }
+        }
     }
 
-    private fun startService() {
+    private fun startServices() {
 
         val serviceIntent = Intent(this, BatteryAlarmService::class.java)
         ContextCompat.startForegroundService(this, serviceIntent)
+    }
+
+    private fun stopServices() {
+        val serviceIntent = Intent(this, BatteryAlarmService::class.java)
+
+        stopService(serviceIntent)
+
+
     }
 
     private var batteryInfoBroadcastReceiver: BroadcastReceiver = object : BroadcastReceiver() {
         @SuppressLint("SetTextI18n")
         override fun onReceive(context: Context, intent: Intent) {
 
-            var batteryLevel = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, 0)
+            val batteryLevel = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, 0)
 
             if (intent.getIntExtra(BatteryManager.EXTRA_PLUGGED, 0) == 0) {
                 mainBinding.txtPlug.text = "plug-out"
