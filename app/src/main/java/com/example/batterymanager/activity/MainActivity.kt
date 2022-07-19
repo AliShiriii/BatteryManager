@@ -1,15 +1,13 @@
 package com.example.batterymanager.activity
 
 import android.annotation.SuppressLint
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
+import android.content.*
 import android.graphics.Color
 import android.os.BatteryManager
 import android.os.Bundle
 import android.view.Gravity
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.example.batterymanager.R
@@ -28,6 +26,15 @@ class MainActivity : AppCompatActivity() {
         val view = mainBinding.root
         setContentView(view)
 
+        initDrawer()
+        serviceConfig()
+
+        registerReceiver(batteryInfoBroadcastReceiver, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
+
+    }
+
+    private fun initDrawer() {
+
         mainBinding.imageMenu.setOnClickListener {
             mainBinding.drawer.openDrawer(Gravity.RIGHT)
         }
@@ -35,9 +42,11 @@ class MainActivity : AppCompatActivity() {
         mainBinding.includeDrawer.txtAppUsage.setOnClickListener {
             startActivity(Intent(this@MainActivity, UsageBatteryActivity::class.java))
             mainBinding.drawer.closeDrawer(Gravity.RIGHT)
-        }
 
-        registerReceiver(batteryInfoBroadcastReceiver, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
+        }
+    }
+
+    private fun serviceConfig() {
 
         if (SharedPreferenceManager.isServiceOn(this@MainActivity) == true) {
 
@@ -62,6 +71,7 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(applicationContext, "service is turn off", Toast.LENGTH_LONG).show()
             }
         }
+
     }
 
     private fun startServices() {
@@ -148,4 +158,19 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onBackPressed() {
+
+        val dialogBuilder = AlertDialog.Builder(this)
+            .setMessage("Do you want to close application?")
+            .setCancelable(true)
+            .setPositiveButton("Yes", DialogInterface.OnClickListener { dialog, id -> finish() })
+            .setNegativeButton(
+                "Cancel",
+                DialogInterface.OnClickListener { dialog, id -> dialog.cancel() })
+
+        val alert = dialogBuilder.create()
+        alert.setTitle("Exit App")
+        alert.show()
+
+    }
 }
