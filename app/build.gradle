@@ -20,6 +20,12 @@ android {
         viewBinding = true
     }
 
+    lintOptions{
+
+        checkReleaseBuilds false
+
+    }
+
     buildTypes {
         release {
             minifyEnabled false

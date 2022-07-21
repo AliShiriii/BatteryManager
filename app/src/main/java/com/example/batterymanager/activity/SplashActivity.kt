@@ -23,7 +23,7 @@ class SplashActivity : AppCompatActivity() {
 
         Log.e("2424", "isServiceOn : ${SharedPreferenceManager.isServiceOn(this@SplashActivity)}")
 
-        val textArray = arrayOf(
+        var textArray = arrayOf(
             "Make Your Battery Powerful",
             "Make Your Battery Safe",
             "Make Your Battery Faster",
@@ -31,8 +31,6 @@ class SplashActivity : AppCompatActivity() {
             "Manage Your Phone Battery",
             "Notify When Your Phone Is Full charge"
         )
-
-        var i = 1
 
         for (i in 1..6) {
             helpTextGenerator((i * 1000).toLong(), textArray[i - 1])
@@ -70,7 +68,7 @@ class SplashActivity : AppCompatActivity() {
 
             })
 
-        }, 2000)
+        }, delayTime)
         Timer().schedule(timerTask {
             runOnUiThread(timerTask {
 
@@ -78,7 +76,7 @@ class SplashActivity : AppCompatActivity() {
 
             })
 
-        }, 3000)
+        }, delayTime)
         Timer().schedule(timerTask {
             runOnUiThread(timerTask {
 
@@ -86,7 +84,7 @@ class SplashActivity : AppCompatActivity() {
 
             })
 
-        }, 4000)
+        }, delayTime)
         Timer().schedule(timerTask {
             runOnUiThread(timerTask {
 
@@ -94,7 +92,7 @@ class SplashActivity : AppCompatActivity() {
 
             })
 
-        }, 5000)
+        }, delayTime)
         Timer().schedule(timerTask {
             runOnUiThread(timerTask {
 
@@ -102,6 +100,6 @@ class SplashActivity : AppCompatActivity() {
 
             })
 
-        }, 6000)
+        }, delayTime)
     }
 }

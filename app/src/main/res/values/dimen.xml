@@ -3,6 +3,7 @@
 
     <dimen name="large_tex">25sp</dimen>
     <dimen name="normal_tex">18sp</dimen>
+    <dimen name="small_tex">12sp</dimen>
     <dimen name="margin_large">12dp</dimen>
 
 </resources>
