@@ -3,5 +3,4 @@
 
 
 # BatteryManager
-------------------------------------------------------------------
 It is a simple note taking app. Written in Kotlin and implementing Android libraries. All changes are saved in the room database.
