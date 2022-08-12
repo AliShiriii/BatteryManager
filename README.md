@@ -4,19 +4,19 @@
 
 # BatteryManager
 
-A simple Android application to manage and determine the state of the mobile battery and check other applications that use the phone's battery
+* A simple Android application to manage and determine the state of the mobile battery and check other applications that use the phone's battery
 
 # Functionality
 
-AlarmService
-Usage Battery Activity.
-Show battery health status.
-Sending battery percentage with notification.
+* AlarmService.
+* Usage Battery Activity.
+* Show battery health status.
+* Sending battery percentage with notification.
 
 # Libraries used
 
-. Material library
-. ViewBinding
-. DataStore(Preferences)
-. Service
+* Material library
+* ViewBinding
+* DataStore(Preferences)
+* Service
 
